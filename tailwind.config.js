@@ -7,10 +7,23 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-1deg) scale(1.25)' },
+          '50%': { transform: 'rotate(1deg) scale(1.25)' },
+        },
+        shake: {
+          '0%': { transform: 'translateX(-9px)' },
+          '16%': { transform: 'translateX(9px)' },
+          '32%': { transform: 'translateX(-6px)' },
+          '48%': { transform: 'translateX(6px)' },
+          '64%': { transform: 'translateX(-3px)' },
+          '80%': { transform: 'translateX(3px)' },
+        },
+      },
+      animation: {
+        wiggle: 'wiggle .1s infinite',
+        shake: 'shake .5s',
       },
     },
   },
