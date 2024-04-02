@@ -1,3 +1,4 @@
+"use client"
 import NumberGuessGame from "./components/gameLogic";
 
 const Home = () => {

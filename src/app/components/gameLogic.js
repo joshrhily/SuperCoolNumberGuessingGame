@@ -39,6 +39,7 @@ class NumberGuessGame extends Component {
 
   handleGuess = () => {
     const { guess, target, tries } = this.state;
+    const inputBox = document.getElementById('input');
     if (!this.inRange(guess)) {
       this.setState({ message: 'Please enter a valid number (1-10)' });
     } else {
@@ -53,10 +54,6 @@ class NumberGuessGame extends Component {
         this.setState({ message: 'Congratulations! You guessed the correct number!' });
         this.setState({ guessClicked: true })
       }
-      if (tries <= 1) {
-        this.setState({ message: 'WOMP WOMP YOU LOSE' });
-        this.setState({ guessClicked: true })
-      }
     }
   }
 
@@ -67,33 +64,47 @@ class NumberGuessGame extends Component {
       void toAnimate.offsetWidth;
       toAnimate.classList.add(animation);
     } else {
-      alert('No element found');
+      console.log('No element found');
     }
   }
-
+  
   render() {
     const { guess, message, tries, target, guessClicked } = this.state;
 
+    if (tries < 1) {
+      return (
+        <div id="main-wrap" className="flex flex-col text-cyan-300 items-center justify-center">
+          <h1 className="text-5xl text-center transition hover:animate-wiggle">Super Cool Number Guessing Game</h1>
+          <div id="info-box" className="flex flex-col mt-48 items-center justify-center">
+            <p className="text-2xl">WOMP WOMP YOU LOSE</p>
+            <button id="restart" className="px-1 border-2 m-2 rounded-md bg-gray-100 text-black shadow-[0_9px_0_rgba(0,0,0,1)] hover:shadow-[0_4px_0_rgba(0,0,0,1)] active:shadow-[0_1px_0_rgba(0,0,0,1)] hover:translate-y-1 active:translate-y-2 active:bg-gray-300 transition" onClick={this.restartGame}>Restart</button>
+          </div>
+        </div>
+      );
+    }
+
     return (
-      <div className="flex flex-col text-cyan-300 items-center justify-center">
-        <h1 className="text-5xl transition hover:animate-wiggle">Super Cool Number Guessing Game</h1>
-        <div className="flex flex-col mt-48 items-center justify-center">
+      <div id="main-wrap" className="flex flex-col text-cyan-300 items-center justify-center">
+        <h1 className="text-5xl text-center transition hover:animate-wiggle">Super Cool Number Guessing Game</h1>
+        <div id="info-box" className="flex flex-col mt-48 items-center justify-center">
           <h1 id="tries" className="text-xl">{tries}</h1>
           <p className="text-2xl">{message}</p>
-          <div className="flex flex-col items-center justify-center m-10">
+          <div id="input" className="flex flex-col items-center justify-center m-10">
             {this.state.guess !== this.state.target &&
               <input
+              id="input"
+              className="text-black"
               type="number"
               value={guess}
               onChange={(e) => this.setState({ guess: e.target.value })}
               placeholder="Enter your guess"
             />
             }
-            <div>
+            <div id="button-wrap" >
               {!guessClicked && tries > 0 && 
-                <button className="px-1 border-2 m-2 rounded-md bg-gray-100 text-black shadow-[0_9px_0_rgba(0,0,0,1)] hover:shadow-[0_4px_0_rgba(0,0,0,1)] active:shadow-[0_1px_0_rgba(0,0,0,1)] hover:translate-y-1 active:translate-y-2 active:bg-gray-300 transition" onClick={this.handleGuess}>Guess</button>
+                <button id="guess" className="px-1 border-2 m-2 rounded-md bg-gray-100 text-black shadow-[0_9px_0_rgba(0,0,0,1)] hover:shadow-[0_4px_0_rgba(0,0,0,1)] active:shadow-[0_1px_0_rgba(0,0,0,1)] hover:translate-y-1 active:translate-y-2 active:bg-gray-300 transition" onkey onClick={this.handleGuess}>Guess</button>
               }
-              <button className="px-1 border-2 m-2 rounded-md bg-gray-100 text-black shadow-[0_9px_0_rgba(0,0,0,1)] hover:shadow-[0_4px_0_rgba(0,0,0,1)] active:shadow-[0_1px_0_rgba(0,0,0,1)] hover:translate-y-1 active:translate-y-2 active:bg-gray-300 transition" onClick={this.restartGame}>Restart</button>
+              <button id="restart" className="px-1 border-2 m-2 rounded-md bg-gray-100 text-black shadow-[0_9px_0_rgba(0,0,0,1)] hover:shadow-[0_4px_0_rgba(0,0,0,1)] active:shadow-[0_1px_0_rgba(0,0,0,1)] hover:translate-y-1 active:translate-y-2 active:bg-gray-300 transition" onClick={this.restartGame}>Restart</button>
             </div>
           </div>
         </div>
